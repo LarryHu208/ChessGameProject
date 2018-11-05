@@ -34,6 +34,7 @@ public class WinMain // extends SpriteWindow
 
 
 	private Snapshot state;
+    private List<Piece> list;  //*Q
 
 	WinMain(Snapshot state, int side) {
 		this.state = state;
@@ -115,6 +116,12 @@ public class WinMain // extends SpriteWindow
 
 		HighlightedTile c;
 		color = Color.yellow;
+
+		if (side==1)   //*Q
+        {
+            x = (x>0)?(9-x):x;
+            y = (y>0)?(9-y):y;
+        }
 
 		if(state.highlighted[x][y] != null) {
 			//System.out.print("Clicked state.highlighted!");
@@ -514,53 +521,6 @@ public class WinMain // extends SpriteWindow
         System.out.println("Goodbye    ");
     }
 
-	static void flip(Tile[][] rows) {
-		for (Tile[] row : rows) {
-			flip(row);
-		}
-	}
-	static void flip(Tile[] array) {
-		int left = 0;
-		int right = array.length - 1;
-		while (left < right) {
-			Tile temp = array[left];
-			array[left] = array[right];
-			array[right] = temp;
-			++left;
-			--right;
-		}
-	}
-
-	Tile[][] get_Side(Tile[][] board) {
-		Tile[][]black = new Tile[9][9];
-		if(side == 0) {
-			black = board;
-			//System.out.print("White");
-		}
-		else {
-			//System.out.print("Black");
-			Tile[][] white_temp = new Tile[9][9];
-			//Copy White over
-			for (int x = 0; x < 9; x++) {
-				for (int y = 1; y < 9; y++) {
-					white_temp[x][y] = board[x][y];
-				}
-			}
-			flip(white_temp);
-			//Copy Black First Row
-			for (int x = 0; x < 9; x++) {
-				black[x][0] = board[x][0];
-			}
-			//Paste Rest of flipped white
-			for (int x = 0; x < 9; x++) {
-				for (int y = 1; y < 9; y++) {
-					black[x][y] = white_temp[x][y - 1];
-				}
-			}
-		}
-			return black;
-	}
-
 
     public void runOnce() throws IOException {
 
@@ -569,7 +529,8 @@ public class WinMain // extends SpriteWindow
 	    if (frame == null) {
 	        return;
 	    }
-	    state.list = new ArrayList<Piece>(state.ChessPieces.values());
+
+	    list = new ArrayList<Piece>(state.ChessPieces.values()); //*Q
 
 	    char pos;
 	    for (int x = 0; x < gridSize.width; x++) {
@@ -599,7 +560,7 @@ public class WinMain // extends SpriteWindow
 	                pos = '.';
 	            }
 	            backgroundTile = new BackgroundTile(Color.blue.darker(), pos);
-	            frame.addTile(x, y, backgroundTile);
+	            frame.addTile( ((side==1)?((x>0)?(9-x):x):x), ((side==1)?((y>0)?(9-y):y):y), backgroundTile); //*Q
 	        }
 	    }
 
@@ -621,40 +582,33 @@ public class WinMain // extends SpriteWindow
 
             for(int x = 1; x < 5; x++) {
                 Tile t = state.tiles[x][0];
-                frame.addTile(x, 0, t);
+                frame.addTile(((side==1)?((x>0)?(9-x):x):x), 0, t);  //*Q
             }
         }
-
-		Tile[][] side_tiles = get_Side(state.tiles);
 
         for (int x = 1; x < gridSize.width; x++) {
             for (int y = 1; y < gridSize.height; y++) {
                 Tile t;
-                t = side_tiles[x][y];
+                t = state.tiles[x][y];
 
                 if (t != null) {
-                    frame.addTile(x, y, t);
-                    for (int j = 0; j < state.list.size(); j++) {
-                        Piece piece = state.list.get(j);
+                    frame.addTile(((side==1)?((x>0)?(9-x):x):x), ((side==1)?((y>0)?(9-y):y):y), t);  //*Q
+                    for (int j = 0; j < list.size(); j++) {
+                        Piece piece = list.get(j);
                         //System.out.println(piece.get_type());
-						if (side == 0) {
-							frame.addTile(piece.get_x(), piece.get_y(), piece.get_tile());
-						}
-						else {
-							frame.addTile(piece.get_x(), 9 - piece.get_y(), piece.get_tile());
-						}
+                        int px = piece.get_x();
+                        int py = piece.get_y();
+                        px = ((side==1)?((px>0)?(9-px):px):px);
+                        py = ((side==1)?((py>0)?(9-py):py):py);
+                        frame.addTile(px, py, piece.get_tile());
                     }
-                    if(state.clicked[x][y]) {
-                    	if(side == 0) {
-							frame.addTile(x, y, state.highlighted[x][y]);
-						}
-						else {
-							frame.addTile(x, 9 - y, state.highlighted[x][y]);
-						}
+                    if (state.clicked[x][y]) {
+                        frame.addTile(((side==1)?((x>0)?(9-x):x):x), ((side==1)?((y>0)?(9-y):y):y), state.highlighted[x][y]);
                     }
                 }
             }
         }
+
         window.showNextFrame();
 	}
 

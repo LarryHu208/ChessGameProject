@@ -23,10 +23,11 @@ public class Snapshot {
     public boolean promotion_flag;
     public boolean promotion_flag_white;
     public boolean promotion_flag_black;
-    public final Size gridSize = new Size(9, 9);
+    public Size gridSize;
 
     public Snapshot() {
         b_tiles = new boolean[9][9];
+        gridSize = new Size(9, 9);
         tiles = new Tile[gridSize.width][gridSize.height];
         ChessPieces = new HashMap<String, Piece>();
         list = new ArrayList<Piece>();
