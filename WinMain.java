@@ -202,43 +202,32 @@ public class WinMain // extends SpriteWindow
 		System.out.println("Key typed:  " + ch + "    ");
 
 		if (ch == (char) 4 || ch == 'q') {
-
 			System.out.println();
-
 			System.out.println("Quitting program.    ");
-
 			System.out.println();
-
 			System.exit(0);
-
-		} else if (ch == 'p') {
-
-			System.out.println("Pausing animation for 5 seconds...    ");
-
-			window.pauseAnimation(5000);
-
-			System.out.println("Pause done.    ");
-
-		} else if (ch == 'r') {
-
-			System.out.println("Testing reset of animation clock...");
-
+		} else if (ch == 's') {
+			System.out.println("Print Chess Board...    ");
 			try {
-
-				Thread.sleep(5000);
-
-			} catch (InterruptedException ex) {
-
-				Thread.currentThread().interrupt();
-
+				print_board();
 			}
-
+        	catch(IOException e) {
+				e.printStackTrace();
+			}
+		} else if (ch == 'p') {
+			System.out.println("Pausing animation for 5 seconds...    ");
+			window.pauseAnimation(5000);
+			System.out.println("Pause done.    ");
+		} else if (ch == 'r') {
+			System.out.println("Testing reset of animation clock...");
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException ex) {
+				Thread.currentThread().interrupt();
+			}
             window.pauseAnimation(0);
-
 			System.out.println("Resuming.");
-
 		}
-
 	}
 
 	public void setup_Piece() throws java.io.IOException {
@@ -614,8 +603,8 @@ public class WinMain // extends SpriteWindow
 
 	public void print_board() throws IOException {
 
-		setup_Piece();
-		setup_Board();
+		// setup_Piece();
+		// setup_Board();
 
 		char[][] board = new char[9][9];
         list = new ArrayList<Piece>(state.ChessPieces.values()); //*Q
