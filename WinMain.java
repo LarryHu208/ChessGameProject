@@ -618,6 +618,8 @@ public class WinMain // extends SpriteWindow
 		setup_Board();
 
 		char[][] board = new char[9][9];
+        list = new ArrayList<Piece>(state.ChessPieces.values()); //*Q
+
 		for (int x = 0; x < gridSize.width; x++) {
 			for (int y = 0; y < gridSize.height; y++) {
 				if(x==0 && y == 0) {
@@ -643,10 +645,14 @@ public class WinMain // extends SpriteWindow
 					else {
 						board[x][y] = '.';
 					}
-					for (int j = 0; j < state.list.size(); j++) {
-						Piece piece = state.list.get(j);
+					for (int j = 0; j < list.size(); j++) {
+						Piece piece = list.get(j);
 						//System.out.println(piece.get_type());
-						board[piece.get_x()][piece.get_y()] = piece.get_tile().getText();
+                        int px = piece.get_x();
+                        int py = piece.get_y();
+                        px = ((side==1)?((px>0)?(9-px):px):px);
+                        py = ((side==1)?((py>0)?(9-py):py):py);
+                        board[px][py] = piece.get_tile().getText();
 					}
 
 				}
