@@ -12,6 +12,10 @@ public abstract class Piece {
 			this.x = x;
 			this.y = y;
 		}
+
+		public String toString() {
+			return (String.format("(%d,%d)",x,y));
+		}
 	}
 
 
@@ -26,8 +30,8 @@ public abstract class Piece {
 
 
 	public void remove() {
-
 	}
+
 	public String get_type() {
 		return type;
 	}
@@ -53,26 +57,30 @@ public abstract class Piece {
 		this.y = y;
 	}
 
+	public boolean move_check( int x, int y) {
+		return (true);
+	}
+
+
 	public List<coord> options() {
 		System.out.println("Piece Moves");
-		return moves;
+		return null;
 	}
 
 	public List<coord> filtered_options(List<coord> list) {
-		for(coord co: list) {
-			if(co.x > 7 || co.x < 0) {
+		/* for(coord co: list) {
+			if(co.x > 8 || co.x < 1) {
 				list.remove(co);
 			}
-			if(co.y > 7 || co.y < 0) {
+			if(co.y > 8 || co.y < 1) {
 				list.remove(co);
 			}
-		}
+		} */
 		return list;
 	}
 
-		public int get_color() {
+	public int get_color() {
 		return color;
 	}
-
 
 }

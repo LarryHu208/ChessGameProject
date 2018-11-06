@@ -37,6 +37,16 @@ public class Pawn extends Piece {
 
     }
 
+    public boolean move_check( int x, int y) {
+        coord newPos = new coord(x,y);
+        if (options()==null) return true;
+        String strList = options().toString();
+        //System.out.println( ("Move to: "+newPos.toString()) );
+        //System.out.println( strList);
+        return ( strList.contains(newPos.toString()));
+    }
+
+
     public List<coord> options() {
         List<coord> list = new ArrayList<coord>();
         if(color == 0) {

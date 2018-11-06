@@ -117,6 +117,11 @@ public class WinMain // extends SpriteWindow
 		HighlightedTile c;
 		color = Color.yellow;
 
+		if ( (state.saved != null) && (state.saved.move_check(x,y)==false) ) {
+			System.out.println("Illegeal move");
+			return;
+		}
+
 		if (side==1)   //*Q
         {
             x = (x>0)?(9-x):x;
@@ -135,7 +140,6 @@ public class WinMain // extends SpriteWindow
 			//promote(x,y);
 		}
 		if (state.saved != null) {
-
 			if (target != null && target != state.saved) {
 				// if piece there, remove from map piece at that spot but not self
 				System.out.println(target.get_name());
@@ -144,15 +148,15 @@ public class WinMain // extends SpriteWindow
 				//state.list.remove(target);
 				System.out.print(state.list.size());
 			}
-			if(state.saved.get_type() == "pawn") {
+			if (state.saved.get_type() == "pawn") {
 				state.promotion = state.saved;
-				if(state.saved.get_color() == 0 && y == 1) {
+				if (state.saved.get_color() == 0 && y == 1) {
 					//System.out.print("White pawn state.promotion");
 					//System.out.println(Paths.get(".").toAbsolutePath().normalize().toString());
 					state.promotion_flag = true;
 					state.promotion_flag_white = true;
 				}
-				if(state.saved.get_color() == 1 && y == 8) {
+				if (state.saved.get_color() == 1 && y == 8) {
 					//System.out.print("Black pawn state.promotion");
 					state.promotion_flag_black = true;
 					state.promotion_flag = true;
@@ -161,12 +165,11 @@ public class WinMain // extends SpriteWindow
 
 			}
 			System.out.println("About to set pos");
-			state.saved.set_pos(x ,y );
+			state.saved.set_pos(x, y);
 			state.saved = null;
 			System.out.println("set pos");
 			clearHArray(state.highlighted);
 		}
-
 		else if(target != null) {
 			//if state.clicked on piece
 			System.out.println(target.get_name());
@@ -175,6 +178,9 @@ public class WinMain // extends SpriteWindow
 			c = new HighlightedTile(color, 'c');
 			state.highlighted[x][y] = c;
 			state.clicked[x][y] = true;
+
+			System.out.println("Mouse state.clicked:  x=" + (x ) + ", y=" + (y) + "    ");
+
 			/*if(target.get_type() == "king") {
 				target = (King) target;
 			}
@@ -451,7 +457,6 @@ public class WinMain // extends SpriteWindow
 		state.b_tiles[5][8] = true;
 		state.ChessPieces.put(White_King.name, White_King);
 
-
 	}
 
 	public void setup_Board() {
@@ -484,9 +489,7 @@ public class WinMain // extends SpriteWindow
 
 		}
 
-
-		state.list = new ArrayList<Piece>(state.ChessPieces.values());
-
+		// state.list = new ArrayList<Piece>(state.ChessPieces.values());
 		System.out.println(state.list.size());
 	}
 
