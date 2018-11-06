@@ -117,16 +117,16 @@ public class WinMain // extends SpriteWindow
 		HighlightedTile c;
 		color = Color.yellow;
 
+		if (side==1)   //*Q
+		{
+			x = (x>0)?(9-x):x;
+			y = (y>0)?(9-y):y;
+		}
+
 		if ( (state.saved != null) && (state.saved.move_check(x,y)==false) ) {
 			System.out.println("Illegeal move");
 			return;
 		}
-
-		if (side==1)   //*Q
-        {
-            x = (x>0)?(9-x):x;
-            y = (y>0)?(9-y):y;
-        }
 
 		if(state.highlighted[x][y] != null) {
 			//System.out.print("Clicked state.highlighted!");

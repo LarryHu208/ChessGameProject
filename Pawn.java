@@ -55,12 +55,16 @@ public class Pawn extends Piece {
                 list.add(new coord(x, y-2));
             }
             list.add(new coord(x, y-1));
+            list.add(new coord(x-1, y-1));
+            list.add(new coord(x+1, y-1));
         }
         if(color == 1) {
             if(moved == false) {
                 list.add(new coord(x, y+2));
             }
             list.add(new coord(x, y+1));
+            list.add(new coord(x-1, y+1));
+            list.add(new coord(x+1, y+1));
         }
         return filtered_options(list);
     }
