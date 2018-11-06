@@ -16,6 +16,11 @@ public abstract class Piece {
 		public String toString() {
 			return (String.format("(%d,%d)",x,y));
 		}
+
+		public boolean equals(coord o) {
+			// Compare the data members and return accordingly
+			return ((this.x==o.x) && (this.y==o.y));
+		}
 	}
 
 
